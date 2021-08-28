@@ -92,7 +92,8 @@ void PCD_Clear(void)
 
 	gpio_put(LCD_DC, 1);
 	gpio_put(LCD_CS, 0);
-	for( uint16_t i= 0; i<504; i++ ) {
+	for( uint16_t i= 0; i<504; i++ )
+	{
 		spi_write_blocking(SPI_PORT, &x, 1);
 	}
 	gpio_put(LCD_CS, 1);
@@ -108,8 +109,9 @@ void PCD_draw(void)
 
 	gpio_put(LCD_DC, 1);
 	gpio_put(LCD_CS, 0);
-		for( uint16_t i= 0; i<504; i++ ) {
-			x= buffer[i];
+	for( uint16_t i= 0; i<504; i++ )
+	{
+		x= buffer[i];
 		spi_write_blocking(SPI_PORT, &x, 1);
 	}
 	gpio_put(LCD_CS, 1);
