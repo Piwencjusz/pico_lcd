@@ -18,9 +18,9 @@ uint8_t * buffer;
 
 static int32_t PCD_SendCommand(uint8_t cmd)
 {
-    gpio_put(LCD_DC, 0);
-    gpio_put(LCD_CS, 0);
-    spi_write_blocking(SPI_PORT, &cmd, 1);
+	gpio_put(LCD_DC, 0);
+	gpio_put(LCD_CS, 0);
+	spi_write_blocking(SPI_PORT, &cmd, 1);
 	gpio_put(LCD_CS, 1);
 
 	return 0;
@@ -28,8 +28,8 @@ static int32_t PCD_SendCommand(uint8_t cmd)
 
 static int32_t PCD_SendData(uint8_t data)
 {
-    gpio_put(LCD_DC, 1);
-    gpio_put(LCD_CS, 0);
+	gpio_put(LCD_DC, 1);
+	gpio_put(LCD_CS, 0);
 	spi_write_blocking(SPI_PORT, &data, 1);
 	gpio_put(LCD_CS, 1);
 
@@ -40,28 +40,28 @@ int32_t PCD_init(void)
 {
 	if ((!buffer) && !(buffer = (uint8_t *)malloc(504)))
 	{
-	    return 0;
+		return 0;
 	}
 
 	memset(buffer, 0, 504);
 
-    spi_init(SPI_PORT, 100000);
+	spi_init(SPI_PORT, 100000);
 
-    gpio_set_function(LCD_MISO, GPIO_FUNC_SPI);
-    gpio_set_function(LCD_MOSI, GPIO_FUNC_SPI);
-    gpio_set_function(LCD_SCK, GPIO_FUNC_SPI);
-    
-    gpio_init(LCD_CS);
-    gpio_init(LCD_RST);
-    gpio_init(LCD_DC);
+	gpio_set_function(LCD_MISO, GPIO_FUNC_SPI);
+	gpio_set_function(LCD_MOSI, GPIO_FUNC_SPI);
+	gpio_set_function(LCD_SCK, GPIO_FUNC_SPI);
 
-    gpio_set_dir(LCD_CS, GPIO_OUT);
-    gpio_set_dir(LCD_RST, GPIO_OUT);
-    gpio_set_dir(LCD_DC, GPIO_OUT);
+	gpio_init(LCD_CS);
+	gpio_init(LCD_RST);
+	gpio_init(LCD_DC);
 
-    gpio_put(LCD_CS, 1);
-    gpio_put(LCD_RST, 1);
-    gpio_put(LCD_DC, 1);
+	gpio_set_dir(LCD_CS, GPIO_OUT);
+	gpio_set_dir(LCD_RST, GPIO_OUT);
+	gpio_set_dir(LCD_DC, GPIO_OUT);
+
+	gpio_put(LCD_CS, 1);
+	gpio_put(LCD_RST, 1);
+	gpio_put(LCD_DC, 1);
 
 	gpio_put(LCD_RST, 0);
 	sleep_ms(10);
@@ -88,12 +88,12 @@ void PCD_SetCursor(uint8_t x, uint8_t y)
 
 void PCD_Clear(void)
 {
-    uint8_t x= 0;
+	uint8_t x= 0;
 
-    gpio_put(LCD_DC, 1);
-    gpio_put(LCD_CS, 0);
+	gpio_put(LCD_DC, 1);
+	gpio_put(LCD_CS, 0);
 	for( uint16_t i= 0; i<504; i++ ) {
-        spi_write_blocking(SPI_PORT, &x, 1);
+		spi_write_blocking(SPI_PORT, &x, 1);
 	}
 	gpio_put(LCD_CS, 1);
 
@@ -107,10 +107,10 @@ void PCD_draw(void)
 	PCD_SetCursor(0, 0);
 
 	gpio_put(LCD_DC, 1);
-    gpio_put(LCD_CS, 0);
-    	for( uint16_t i= 0; i<504; i++ ) {
+	gpio_put(LCD_CS, 0);
+		for( uint16_t i= 0; i<504; i++ ) {
 			x= buffer[i];
-        spi_write_blocking(SPI_PORT, &x, 1);
+		spi_write_blocking(SPI_PORT, &x, 1);
 	}
 	gpio_put(LCD_CS, 1);
 }
@@ -127,7 +127,7 @@ void PCD_CharWrite(char ch, uint8_t inv)
 
 void PCD_StringWrite(char * str, uint8_t inv)
 {
-  while (*str) PCD_CharWrite(*str++, inv);
+	while (*str) PCD_CharWrite(*str++, inv);
 }
 
 void PCD_int(int val, uint8_t radix, uint8_t inv)
